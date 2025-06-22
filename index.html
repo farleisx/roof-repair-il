@@ -51,7 +51,7 @@
   <label for="prompt">Describe your website:</label>
   <textarea id="prompt" rows="4" placeholder="e.g. A landing page with a dark background and a big red button"></textarea>
 
-  <button id="generateBtn" disabled>Generating...</button>
+  <button id="generateBtn" disabled>Generate</button>
 
   <h2>Live Preview:</h2>
   <iframe id="preview" sandbox="allow-scripts"></iframe>
@@ -90,8 +90,8 @@
     generateBtn.textContent = 'Generating...';
 
     try {
-      // Call your backend proxy endpoint here
-      const response = await fetch('https://687dd834-e975-444d-b3e8-58005f51b520-00-35dllz6mcvi7.sisko.replit.dev/', {
+      // Call your backend proxy endpoint here (note the /generate path)
+      const response = await fetch('https://687dd834-e975-444d-b3e8-58005f51b520-00-35dllz6mcvi7.sisko.replit.dev/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt })
