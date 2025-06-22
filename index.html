@@ -61,26 +61,12 @@
   const preview = document.getElementById('preview');
   const generateBtn = document.getElementById('generateBtn');
 
-  let timeoutId = null;
-
   // Enable button only when prompt is not empty
   promptInput.addEventListener('input', () => {
     generateBtn.disabled = !promptInput.value.trim();
-    debounceGenerate();
   });
 
   generateBtn.addEventListener('click', generate);
-
-  // Debounce user typing (auto update after stop typing 1.5s)
-  function debounceGenerate() {
-    clearTimeout(timeoutId);
-    if (!promptInput.value.trim()) return;
-    generateBtn.textContent = 'Generating...';
-    generateBtn.disabled = true;
-    timeoutId = setTimeout(() => {
-      generate();
-    }, 1500);
-  }
 
   async function generate() {
     const prompt = promptInput.value.trim();
