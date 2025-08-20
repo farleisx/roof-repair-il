@@ -4,193 +4,123 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Barber Booking</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Rubik', sans-serif; line-height: 1.6; scroll-behavior: smooth; }
-    a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; display: block; border-radius: 8px; }
-    section { padding: 60px 20px; }
-    h1,h2,h3,h4 { color: inherit; }
-    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; border-bottom: 2px solid #ccc; }
-    .top-bar button { border: none; padding: 12px 25px; font-size: 1rem; border-radius: 6px; cursor: pointer; transition: background 0.3s ease; }
-    .hero { position: relative; height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-    .hero button { padding: 15px 35px; border: none; border-radius: 50px; cursor: pointer; transition: transform 0.3s ease; }
-    .services { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-around; gap: 30px; }
-    .service-card { border-radius: 15px; padding: 25px; flex: 1 1 250px; max-width: 300px; transition: transform 0.3s ease; text-align: center; }
-    .contact-form-container { max-width: 600px; margin: 0 auto; padding: 40px 30px; border-radius: 15px; }
-    .contact-form-container form { display: flex; flex-direction: column; gap: 15px; }
-    .contact-form-container input, .contact-form-container select { padding: 15px; border-radius: 8px; border: 1px solid #ddd; font-size: 1rem; }
-    .contact-form-container button { padding: 15px; border: none; border-radius: 50px; font-size: 1.1rem; cursor: pointer; transition: transform 0.3s ease; }
-    #status { text-align:center; margin-top:15px; font-weight:bold; }
-    .gallery { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap:25px; }
-    .gallery img { width:100%; border-radius:15px; opacity:0; transform:translateY(20px); transition: all 0.6s ease; }
-    .gallery img.visible { opacity:1; transform:translateY(0); }
-    footer { text-align:center; padding:25px 10px; font-size:0.9rem; }
-    @media(max-width:1024px){ .gallery { grid-template-columns: repeat(2,1fr); } }
-    @media(max-width:768px){ 
-      .hero h1{font-size:2.2rem;} 
-      .hero h2{font-size:1.2rem;} 
-      .top-bar{flex-direction:column; gap:10px; text-align:center;} 
-      .gallery{grid-template-columns:1fr;}
-    }
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    form { display: flex; flex-direction: column; max-width: 400px; margin: auto; gap: 10px; }
+    input, select, button { padding: 10px; font-size: 1rem; }
+    #status { text-align:center; font-weight:bold; margin-top:10px; }
   </style>
 </head>
 <body>
 
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <button>Call</button>
-    <span>ספרות גברים</span>
-  </div>
+<h2>קביעת תור במספרה</h2>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>ברוך הבא למספרה</h1>
-    <h2>קבע תור במהירות ובקלות</h2>
-    <button onclick="document.getElementById('leadForm').scrollIntoView({behavior:'smooth'});">קבע תור</button>
-  </section>
+<form id="leadForm">
+  <input type="text" name="name" placeholder="שם מלא" required>
+  <input type="tel" name="phone" placeholder="טלפון" required>
+  <select name="service" required>
+    <option value="">בחר שירות</option>
+    <option value="תספורת">תספורת</option>
+    <option value="זקן">זקן</option>
+    <option value="חבילה מלאה">חבילה מלאה</option>
+  </select>
+  <input type="date" name="date" id="datePicker" required>
+  <input type="time" name="time" id="timePicker" required>
+  <button type="submit">קבע תור</button>
+</form>
 
-  <!-- Services -->
-  <section>
-    <h3 style="text-align:center; margin-bottom:50px;">השירותים שלנו</h3>
-    <div class="services">
-      <div class="service-card"><h4>תספורת</h4><p>תספורת מקצועית לגברים</p></div>
-      <div class="service-card"><h4>זקן</h4><p>עיצוב וגילוח זקן</p></div>
-      <div class="service-card"><h4>חבילה מלאה</h4><p>תספורת + זקן במחיר מיוחד</p></div>
-    </div>
-  </section>
+<p id="status"></p>
 
-  <!-- Booking Form -->
-  <section>
-    <div class="contact-form-container">
-      <h3>קביעת תור</h3>
-      <form id="leadForm">
-        <input type="text" name="name" placeholder="שם מלא" required>
-        <input type="tel" name="phone" placeholder="טלפון" required>
-        <select name="service" required>
-          <option value="">בחר שירות</option>
-          <option value="תספורת">תספורת</option>
-          <option value="זקן">זקן</option>
-          <option value="חבילה מלאה">חבילה מלאה</option>
-        </select>
-        <input type="date" name="date" id="dateInput" required>
-        <input type="time" name="time" id="timeInput" required>
-        <button type="submit">קבע תור</button>
-      </form>
-      <p id="status"></p>
-    </div>
-  </section>
+<script>
+const leadForm = document.getElementById("leadForm");
+const dateInput = document.getElementById("datePicker");
+const timeInput = document.getElementById("timePicker");
+const statusEl = document.getElementById("status");
+let bookedAppointments = [];
 
-  <!-- Gallery -->
-  <section>
-    <h3 style="text-align:center; margin-bottom:50px;">גלריה</h3>
-    <div class="gallery">
-      <img alt="Image 1">
-      <img alt="Image 2">
-      <img alt="Image 3">
-      <img alt="Image 4">
-    </div>
-  </section>
+// Your Apps Script URL
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8mLLU3TYi8Ma8A_coDFbH1TUuUOIl5wPN3iec001zWylxeiFcWZnChvpJeHegKG9qfg/exec";
 
-  <!-- Footer -->
-  <footer>© 2025 Barber Shop</footer>
+// Fetch booked appointments
+async function fetchAppointments() {
+  try {
+    const res = await fetch(SCRIPT_URL);
+    bookedAppointments = await res.json();
+  } catch(err) {
+    console.error("Failed to fetch appointments:", err);
+  }
+}
 
-  <!-- JS -->
-  <script>
-    // Gallery fade-in
-    const galleryImages = document.querySelectorAll('.gallery img');
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          obs.unobserve(entry.target);
-        }
-      });
-    }, {threshold:0.5});
-    galleryImages.forEach(img => observer.observe(img));
+// Check if selected time is valid
+function isTimeValid(selectedDate, selectedTime) {
+  const now = new Date();
+  const [hours, minutes] = selectedTime.split(":").map(Number);
+  const selected = new Date(selectedDate + "T" + selectedTime + ":00");
+  
+  // At least 1 hour from now
+  if (selected - now < 60*60*1000) return false;
 
-    const leadForm = document.getElementById("leadForm");
-    const dateInput = document.getElementById("dateInput");
-    const timeInput = document.getElementById("timeInput");
-    const statusEl = document.getElementById("status");
+  // Already booked?
+  for (const appt of bookedAppointments) {
+    if (appt.date === selectedDate && appt.time === selectedTime) return false;
+  }
+  return true;
+}
 
-    let bookedAppointments = [];
+// Limit time picker when date changes
+dateInput.addEventListener("change", () => {
+  const today = new Date().toISOString().split("T")[0];
+  if(dateInput.value === today) {
+    const nextHour = new Date(Date.now() + 60*60*1000);
+    const h = String(nextHour.getHours()).padStart(2,"0");
+    const m = String(nextHour.getMinutes()).padStart(2,"0");
+    timeInput.min = `${h}:${m}`;
+  } else {
+    timeInput.min = "00:00";
+  }
+});
 
-    // Fetch booked appointments from Apps Script
-    async function fetchAppointments() {
-      try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbz8mLLU3TYi8Ma8A_coDFbH1TUuUOIl5wPN3iec001zWylxeiFcWZnChvpJeHegKG9qfg/exec");
-        bookedAppointments = await response.json();
-      } catch(err) {
-        console.error("Failed to fetch appointments:", err);
-      }
+// Submit booking
+leadForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(leadForm);
+  const params = new URLSearchParams(formData);
+
+  if(!isTimeValid(dateInput.value, timeInput.value)){
+    statusEl.innerText = "⚠️ הזמן הזה אינו זמין. בחר שעה אחרת.";
+    statusEl.style.color = "red";
+    return;
+  }
+
+  try {
+    const response = await fetch(SCRIPT_URL, { method: "POST", body: params });
+    const result = await response.text();
+
+    if(result.toLowerCase() === "success") {
+      statusEl.innerText = "✅ התור נקבע בהצלחה!";
+      statusEl.style.color = "green";
+      leadForm.reset();
+      await fetchAppointments(); // refresh booked appointments
+    } else if(result.toLowerCase() === "unavailable") {
+      statusEl.innerText = "⚠️ השעה הזאת כבר תפוסה.";
+      statusEl.style.color = "red";
+    } else if(result.toLowerCase() === "too_soon") {
+      statusEl.innerText = "⚠️ ניתן לקבוע תור רק שעה מהזמן הנוכחי ומעלה.";
+      statusEl.style.color = "red";
+    } else {
+      statusEl.innerText = "❌ שגיאה: " + result;
+      statusEl.style.color = "red";
     }
+  } catch(err){
+    statusEl.innerText = "❌ בקשה נכשלה";
+    statusEl.style.color = "red";
+  }
+});
 
-    function isTimeValid(date, time) {
-      const now = new Date();
-      const selected = new Date(date + "T" + time + ":00");
-      if (selected - now < 60*60*1000) return false; // less than 1 hour from now
-      for (const appt of bookedAppointments) {
-        if (appt.date === date && appt.time === time) return false;
-      }
-      return true;
-    }
+// Initial fetch
+fetchAppointments();
+</script>
 
-    // Disable invalid time selection
-    timeInput.addEventListener("input", () => {
-      if (!isTimeValid(dateInput.value, timeInput.value)) {
-        statusEl.innerText = "⚠️ הזמן הזה אינו זמין, בחר שעה אחרת.";
-        statusEl.style.color = "red";
-        timeInput.value = "";
-      } else {
-        statusEl.innerText = "";
-      }
-    });
-
-    // Submit booking
-    leadForm.addEventListener("submit", async function(e) {
-      e.preventDefault();
-      await fetchAppointments(); // refresh appointments
-
-      if (!isTimeValid(dateInput.value, timeInput.value)) {
-        statusEl.innerText = "⚠️ הזמן הזה אינו זמין, בחר שעה אחרת.";
-        statusEl.style.color = "red";
-        return;
-      }
-
-      const formData = new FormData(leadForm);
-      const params = new URLSearchParams(formData);
-
-      try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbz8mLLU3TYi8Ma8A_coDFbH1TUuUOIl5wPN3iec001zWylxeiFcWZnChvpJeHegKG9qfg/exec", {
-          method: "POST",
-          body: params
-        });
-        const result = await response.text();
-
-        if(result.toLowerCase() === "success") {
-          statusEl.innerText = "✅ התור נקבע בהצלחה!";
-          statusEl.style.color = "green";
-          leadForm.reset();
-          fetchAppointments(); // refresh booked times
-        } else if(result.toLowerCase() === "unavailable") {
-          statusEl.innerText = "⚠️ השעה הזאת כבר תפוסה.";
-          statusEl.style.color = "red";
-        } else if(result.toLowerCase() === "too_soon") {
-          statusEl.innerText = "⚠️ הזמן חייב להיות לפחות שעה מהזמן הנוכחי.";
-          statusEl.style.color = "red";
-        } else {
-          statusEl.innerText = "❌ שגיאה: " + result;
-          statusEl.style.color = "red";
-        }
-      } catch(err) {
-        statusEl.innerText = "❌ בקשה נכשלה";
-        statusEl.style.color = "red";
-      }
-    });
-
-    fetchAppointments(); // initial load
-  </script>
 </body>
 </html>
