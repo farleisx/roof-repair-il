@@ -1,209 +1,191 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barber Booking</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Rubik', sans-serif; line-height: 1.6; scroll-behavior: smooth; }
-    a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; display: block; border-radius: 8px; }
-    section { padding: 60px 20px; }
-    h1, h2, h3, h4 { color: inherit; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barber Booking</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Rubik', sans-serif; line-height: 1.6; scroll-behavior: smooth; }
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; border-radius: 8px; }
+section { padding: 60px 20px; }
+h1,h2,h3,h4 { color: inherit; }
 
-    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; border-bottom: 2px solid #ccc; }
-    .top-bar button { border: none; padding: 12px 25px; font-size: 1rem; border-radius: 6px; cursor: pointer; transition: background 0.3s ease; }
-    .top-bar button:hover { transform: scale(1.05); }
-    .top-bar span { font-size: 1rem; font-weight: 500; }
+.top-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; border-bottom: 2px solid #ccc; }
+.top-bar button { border: none; padding: 12px 25px; font-size: 1rem; border-radius: 6px; cursor: pointer; transition: background 0.3s ease; }
+.top-bar button:hover { transform: scale(1.05); }
+.top-bar span { font-size: 1rem; font-weight: 500; }
 
-    .hero { position: relative; height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-    .hero-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; padding: 0 20px; }
-    .hero h1 { font-size: 3rem; margin-bottom: 20px; line-height: 1.2; }
-    .hero h2 { font-size: 1.5rem; margin-bottom: 30px; }
-    .hero button { padding: 15px 35px; border: none; border-radius: 50px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .hero button:hover { transform: scale(1.05); }
+.hero { position: relative; height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.hero-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; padding: 0 20px; }
+.hero h1 { font-size: 3rem; margin-bottom: 20px; line-height: 1.2; }
+.hero h2 { font-size: 1.5rem; margin-bottom: 30px; }
+.hero button { padding: 15px 35px; border: none; border-radius: 50px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.hero button:hover { transform: scale(1.05); }
 
-    .services { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-around; gap: 30px; }
-    .service-card { border-radius: 15px; padding: 25px; flex: 1 1 250px; max-width: 300px; transition: transform 0.3s ease, box-shadow 0.3s ease; text-align: center; }
-    .service-card:hover { transform: translateY(-8px); }
-    .service-card h4 { margin: 15px 0 10px; }
-    .service-card p { font-size: 0.95rem; }
+.services { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-around; gap: 30px; }
+.service-card { border-radius: 15px; padding: 25px; flex: 1 1 250px; max-width: 300px; transition: transform 0.3s ease, box-shadow 0.3s ease; text-align: center; }
+.service-card:hover { transform: translateY(-8px); }
+.service-card h4 { margin: 15px 0 10px; }
+.service-card p { font-size: 0.95rem; }
 
-    .contact-form-container { max-width: 600px; margin: 0 auto; padding: 40px 30px; border-radius: 15px; }
-    .contact-form-container h3 { text-align: center; margin-bottom: 25px; }
-    .contact-form-container form { display: flex; flex-direction: column; gap: 15px; }
-    .contact-form-container input, .contact-form-container select { padding: 15px; border-radius: 8px; border: 1px solid #ddd; font-size: 1rem; }
-    .contact-form-container button { padding: 15px; border: none; border-radius: 50px; font-size: 1.1rem; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .contact-form-container button:hover { transform: scale(1.05); }
-    #status { text-align:center; margin-top:15px; font-weight:bold; }
+.contact-form-container { max-width: 600px; margin: 0 auto; padding: 40px 30px; border-radius: 15px; }
+.contact-form-container h3 { text-align: center; margin-bottom: 25px; }
+.contact-form-container form { display: flex; flex-direction: column; gap: 15px; }
+.contact-form-container input, .contact-form-container select { padding: 15px; border-radius: 8px; border: 1px solid #ddd; font-size: 1rem; }
+.contact-form-container button { padding: 15px; border: none; border-radius: 50px; font-size: 1.1rem; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.contact-form-container button:hover { transform: scale(1.05); }
+#status { text-align:center; margin-top:15px; font-weight:bold; }
 
-    .gallery { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
-    .gallery img { width: 100%; border-radius: 15px; opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
-    .gallery img.visible { opacity: 1; transform: translateY(0); }
+.gallery { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+.gallery img { width: 100%; border-radius: 15px; opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+.gallery img.visible { opacity: 1; transform: translateY(0); }
 
-    footer { text-align: center; padding: 25px 10px; font-size: 0.9rem; }
+footer { text-align: center; padding: 25px 10px; font-size: 0.9rem; }
 
-    @media(max-width:1024px){ .gallery { grid-template-columns: repeat(2, 1fr); } }
-    @media(max-width:768px){ 
-      .hero h1 { font-size: 2.2rem; } 
-      .hero h2 { font-size: 1.2rem; } 
-      .top-bar { flex-direction: column; gap: 10px; text-align: center; } 
-      .gallery { grid-template-columns: 1fr; }
-    }
-  </style>
+@media(max-width:1024px){ .gallery { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width:768px){ .hero h1 { font-size: 2.2rem; } .hero h2 { font-size: 1.2rem; } .top-bar { flex-direction: column; gap: 10px; text-align: center; } .gallery { grid-template-columns: 1fr; } }
+</style>
 </head>
 <body>
 
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <button>Call</button>
-    <span>ספרות גברים</span>
+<div class="top-bar">
+  <button>Call</button>
+  <span>ספרות גברים</span>
+</div>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>ברוך הבא למספרה</h1>
+    <h2>קבע תור במהירות ובקלות</h2>
+    <button onclick="document.getElementById('leadForm').scrollIntoView({ behavior: 'smooth' });">קבע תור</button>
   </div>
+</section>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>ברוך הבא למספרה</h1>
-      <h2>קבע תור במהירות ובקלות</h2>
-      <button onclick="document.getElementById('leadForm').scrollIntoView({ behavior: 'smooth' });">קבע תור</button>
-    </div>
-  </section>
+<section>
+  <h3 style="text-align:center; margin-bottom:50px;">השירותים שלנו</h3>
+  <div class="services">
+    <div class="service-card"><h4>תספורת</h4><p>תספורת מקצועית לגברים</p></div>
+    <div class="service-card"><h4>זקן</h4><p>עיצוב וגילוח זקן</p></div>
+    <div class="service-card"><h4>חבילה מלאה</h4><p>תספורת + זקן במחיר מיוחד</p></div>
+  </div>
+</section>
 
-  <!-- Services Section -->
-  <section>
-    <h3 style="text-align:center; margin-bottom:50px;">השירותים שלנו</h3>
-    <div class="services">
-      <div class="service-card">
-        <h4>תספורת</h4>
-        <p>תספורת מקצועית לגברים</p>
-      </div>
-      <div class="service-card">
-        <h4>זקן</h4>
-        <p>עיצוב וגילוח זקן</p>
-      </div>
-      <div class="service-card">
-        <h4>חבילה מלאה</h4>
-        <p>תספורת + זקן במחיר מיוחד</p>
-      </div>
-    </div>
-  </section>
+<section>
+  <div class="contact-form-container">
+    <h3>קביעת תור</h3>
+    <form id="leadForm">
+      <input type="text" name="name" placeholder="שם מלא" required>
+      <input type="tel" name="phone" placeholder="טלפון" required>
+      <select name="service" required>
+        <option value="">בחר שירות</option>
+        <option value="תספורת">תספורת</option>
+        <option value="זקן">זקן</option>
+        <option value="חבילה מלאה">חבילה מלאה</option>
+      </select>
+      <input type="date" name="date" id="datePicker" required>
+      <input type="time" name="time" id="timePicker" required>
+      <button type="submit">קבע תור</button>
+    </form>
+    <p id="status"></p>
+  </div>
+</section>
 
-  <!-- Booking Form -->
-  <section>
-    <div class="contact-form-container">
-      <h3>קביעת תור</h3>
-      <form id="leadForm">
-        <input type="text" name="name" placeholder="שם מלא" required>
-        <input type="tel" name="phone" placeholder="טלפון" required>
-        <select name="service" required>
-          <option value="">בחר שירות</option>
-          <option value="תספורת">תספורת</option>
-          <option value="זקן">זקן</option>
-          <option value="חבילה מלאה">חבילה מלאה</option>
-        </select>
-        <input type="date" name="date" id="date" required>
-        <input type="time" name="time" id="time" required>
-        <button type="submit">קבע תור</button>
-      </form>
-      <p id="status"></p>
-    </div>
-  </section>
+<section>
+  <h3 style="text-align:center; margin-bottom:50px;">גלריה</h3>
+  <div class="gallery">
+    <img alt="Image 1">
+    <img alt="Image 2">
+    <img alt="Image 3">
+    <img alt="Image 4">
+  </div>
+</section>
 
-  <!-- Gallery Section -->
-  <section>
-    <h3 style="text-align:center; margin-bottom:50px;">גלריה</h3>
-    <div class="gallery">
-      <img alt="Image 1">
-      <img alt="Image 2">
-      <img alt="Image 3">
-      <img alt="Image 4">
-    </div>
-  </section>
+<footer>© 2025 Barber Shop</footer>
 
-  <!-- Footer -->
-  <footer>
-    © 2025 Barber Shop
-  </footer>
+<script>
+// Gallery fade-in
+const galleryImages = document.querySelectorAll('.gallery img');
+const observer = new IntersectionObserver((entries, obs) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      obs.unobserve(entry.target);
+    }
+  });
+}, {threshold:0.5});
+galleryImages.forEach(img => observer.observe(img));
 
-  <script>
-    // Gallery fade-in
-    const galleryImages = document.querySelectorAll('.gallery img');
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          obs.unobserve(entry.target);
-        }
-      });
-    }, {threshold:0.5});
-    galleryImages.forEach(img => observer.observe(img));
+// Disable past times and already booked
+const datePicker = document.getElementById("datePicker");
+const timePicker = document.getElementById("timePicker");
 
-    // Booking form submission
-    const webAppURL = "https://script.google.com/macros/s/AKfycbz8mLLU3TYi8Ma8A_coDFbH1TUuUOIl5wPN3iec001zWylxeiFcWZnChvpJeHegKG9qfg/exec";
-    const form = document.getElementById("leadForm");
+datePicker.addEventListener("change", async () => {
+  const selectedDate = datePicker.value;
+  const response = await fetch("https://script.google.com/macros/s/AKfycbz8mLLU3TYi8Ma8A_coDFbH1TUuUOIl5wPN3iec001zWylxeiFcWZnChvpJeHegKG9qfg/exec?date=" + selectedDate);
+  const bookedTimes = await response.json();
+  
+  timePicker.value = "";
+  timePicker.min = "";
+  
+  // Set minimum time to 1 hour from now if selected date is today
+  const now = new Date();
+  if (selectedDate === now.toISOString().split("T")[0]) {
+    const nextHour = new Date(now.getTime() + 60*60*1000);
+    let h = String(nextHour.getHours()).padStart(2, "0");
+    let m = String(nextHour.getMinutes()).padStart(2, "0");
+    timePicker.min = `${h}:${m}`;
+  }
+
+  // Disable already booked times
+  timePicker.addEventListener("input", () => {
+    if (bookedTimes.includes(timePicker.value)) {
+      alert("⚠️ השעה הזאת כבר תפוסה. בחר שעה אחרת.");
+      timePicker.value = "";
+    }
+  });
+});
+
+// Booking form submission
+document.getElementById("leadForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  
+  const form = e.target;
+  const formData = new FormData(form);
+  const params = new URLSearchParams(formData);
+
+  try {
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbz8mLLU3TYi8Ma8A_coDFbH1TUuUOIl5wPN3iec001zWylxeiFcWZnChvpJeHegKG9qfg/exec",
+      { method: "POST", body: params }
+    );
+
+    const result = await response.text();
     const statusEl = document.getElementById("status");
-    const timeInput = document.getElementById("time");
-    const dateInput = document.getElementById("date");
 
-    // Disable past hours dynamically
-    dateInput.addEventListener("change", async () => {
-      const selectedDate = dateInput.value;
-      if (!selectedDate) return;
+    if (result.toLowerCase() === "success") {
+      statusEl.innerText = "✅ התור נקבע בהצלחה!";
+      statusEl.style.color = "green";
+      form.reset();
+    } else if (result.toLowerCase() === "unavailable") {
+      statusEl.innerText = "⚠️ השעה הזאת כבר תפוסה.";
+      statusEl.style.color = "red";
+    } else if (result.toLowerCase() === "too_soon") {
+      statusEl.innerText = "⚠️ ניתן לקבוע תור רק שעה מהזמן הנוכחי ומעלה.";
+      statusEl.style.color = "red";
+    } else {
+      statusEl.innerText = "❌ שגיאה: " + result;
+      statusEl.style.color = "red";
+    }
+  } catch(err) {
+    const statusEl = document.getElementById("status");
+    statusEl.innerText = "❌ בקשה נכשלה";
+    statusEl.style.color = "red";
+  }
+});
+</script>
 
-      // Fetch booked times
-      const res = await fetch(`${webAppURL}?date=${selectedDate}`);
-      const booked = await res.json();
-
-      // Current time plus 1 hour
-      const now = new Date();
-      const minHour = new Date(now.getTime() + 60*60*1000);
-      const minTimeStr = minHour.toTimeString().slice(0,5);
-
-      timeInput.value = "";
-      timeInput.min = (selectedDate === now.toISOString().slice(0,10)) ? minTimeStr : "00:00";
-
-      // Disable booked times
-      timeInput.addEventListener("input", () => {
-        if(booked.includes(timeInput.value)) {
-          statusEl.innerText = "⚠️ השעה הזאת כבר תפוסה.";
-          statusEl.style.color = "red";
-          timeInput.value = "";
-        } else {
-          statusEl.innerText = "";
-        }
-      });
-    });
-
-    form.addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const params = new URLSearchParams(formData);
-
-      try {
-        const res = await fetch(webAppURL, { method: "POST", body: params });
-        const result = await res.text();
-
-        if (result.toLowerCase() === "success") {
-          statusEl.innerText = "✅ התור נקבע בהצלחה!";
-          statusEl.style.color = "green";
-          form.reset();
-        } else if (result.toLowerCase() === "unavailable") {
-          statusEl.innerText = "⚠️ השעה הזאת כבר תפוסה.";
-          statusEl.style.color = "red";
-        } else if (result.toLowerCase() === "too_soon") {
-          statusEl.innerText = "⚠️ צריך לבחור שעה לפחות שעה מהזמן הנוכחי.";
-          statusEl.style.color = "red";
-        } else {
-          statusEl.innerText = "❌ שגיאה: " + result;
-          statusEl.style.color = "red";
-        }
-      } catch(err) {
-        statusEl.innerText = "❌ בקשה נכשלה";
-        statusEl.style.color = "red";
-      }
-    });
-  </script>
 </body>
 </html>
