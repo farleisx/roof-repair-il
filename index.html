@@ -5,122 +5,100 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Barber Booking</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    form { display: flex; flex-direction: column; max-width: 400px; margin: auto; gap: 10px; }
-    input, select, button { padding: 10px; font-size: 1rem; }
-    #status { text-align:center; font-weight:bold; margin-top:10px; }
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input, select, button { display: block; margin: 10px 0; padding: 10px; font-size: 1rem; }
+    #status { font-weight: bold; margin-top: 10px; }
   </style>
 </head>
 <body>
+  <h1>קבע תור</h1>
+  <form id="leadForm">
+    <input type="text" name="name" placeholder="שם מלא" required>
+    <input type="tel" name="phone" placeholder="טלפון" required>
+    <select name="service" required>
+      <option value="">בחר שירות</option>
+      <option value="תספורת">תספורת</option>
+      <option value="זקן">זקן</option>
+      <option value="חבילה מלאה">חבילה מלאה</option>
+    </select>
+    <input type="date" name="date" id="dateInput" required>
+    <input type="time" name="time" id="timeInput" required>
+    <button type="submit">קבע תור</button>
+  </form>
+  <div id="status"></div>
 
-<h2>קביעת תור במספרה</h2>
+  <script>
+    const leadForm = document.getElementById("leadForm");
+    const dateInput = document.getElementById("dateInput");
+    const timeInput = document.getElementById("timeInput");
+    const statusEl = document.getElementById("status");
+    const webAppURL = "https://script.google.com/macros/s/AKfycbzUaPtoG_u50g3oy7DN-Bf600n_64aw6i4mokrySTnfK1WNYtor5tMHupOPZoOYopWB/exec";
 
-<form id="leadForm">
-  <input type="text" name="name" placeholder="שם מלא" required>
-  <input type="tel" name="phone" placeholder="טלפון" required>
-  <select name="service" required>
-    <option value="">בחר שירות</option>
-    <option value="תספורת">תספורת</option>
-    <option value="זקן">זקן</option>
-    <option value="חבילה מלאה">חבילה מלאה</option>
-  </select>
-  <input type="date" name="date" id="datePicker" required>
-  <input type="time" name="time" id="timePicker" required>
-  <button type="submit">קבע תור</button>
-</form>
+    let bookedAppointments = [];
 
-<p id="status"></p>
-
-<script>
-const leadForm = document.getElementById("leadForm");
-const dateInput = document.getElementById("datePicker");
-const timeInput = document.getElementById("timePicker");
-const statusEl = document.getElementById("status");
-let bookedAppointments = [];
-
-// Your Apps Script URL
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8mLLU3TYi8Ma8A_coDFbH1TUuUOIl5wPN3iec001zWylxeiFcWZnChvpJeHegKG9qfg/exec";
-
-// Fetch booked appointments
-async function fetchAppointments() {
-  try {
-    const res = await fetch(SCRIPT_URL);
-    bookedAppointments = await res.json();
-  } catch(err) {
-    console.error("Failed to fetch appointments:", err);
-  }
-}
-
-// Check if selected time is valid
-function isTimeValid(selectedDate, selectedTime) {
-  const now = new Date();
-  const [hours, minutes] = selectedTime.split(":").map(Number);
-  const selected = new Date(selectedDate + "T" + selectedTime + ":00");
-  
-  // At least 1 hour from now
-  if (selected - now < 60*60*1000) return false;
-
-  // Already booked?
-  for (const appt of bookedAppointments) {
-    if (appt.date === selectedDate && appt.time === selectedTime) return false;
-  }
-  return true;
-}
-
-// Limit time picker when date changes
-dateInput.addEventListener("change", () => {
-  const today = new Date().toISOString().split("T")[0];
-  if(dateInput.value === today) {
-    const nextHour = new Date(Date.now() + 60*60*1000);
-    const h = String(nextHour.getHours()).padStart(2,"0");
-    const m = String(nextHour.getMinutes()).padStart(2,"0");
-    timeInput.min = `${h}:${m}`;
-  } else {
-    timeInput.min = "00:00";
-  }
-});
-
-// Submit booking
-leadForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const formData = new FormData(leadForm);
-  const params = new URLSearchParams(formData);
-
-  if(!isTimeValid(dateInput.value, timeInput.value)){
-    statusEl.innerText = "⚠️ הזמן הזה אינו זמין. בחר שעה אחרת.";
-    statusEl.style.color = "red";
-    return;
-  }
-
-  try {
-    const response = await fetch(SCRIPT_URL, { method: "POST", body: params });
-    const result = await response.text();
-
-    if(result.toLowerCase() === "success") {
-      statusEl.innerText = "✅ התור נקבע בהצלחה!";
-      statusEl.style.color = "green";
-      leadForm.reset();
-      await fetchAppointments(); // refresh booked appointments
-    } else if(result.toLowerCase() === "unavailable") {
-      statusEl.innerText = "⚠️ השעה הזאת כבר תפוסה.";
-      statusEl.style.color = "red";
-    } else if(result.toLowerCase() === "too_soon") {
-      statusEl.innerText = "⚠️ ניתן לקבוע תור רק שעה מהזמן הנוכחי ומעלה.";
-      statusEl.style.color = "red";
-    } else {
-      statusEl.innerText = "❌ שגיאה: " + result;
-      statusEl.style.color = "red";
+    async function fetchAppointments() {
+      try {
+        const response = await fetch(webAppURL);
+        bookedAppointments = await response.json();
+      } catch(err) {
+        console.error("Failed to fetch appointments:", err);
+      }
     }
-  } catch(err){
-    statusEl.innerText = "❌ בקשה נכשלה";
-    statusEl.style.color = "red";
-  }
-});
 
-// Initial fetch
-fetchAppointments();
-</script>
+    function isTimeValid(selectedDate, selectedTime) {
+      const now = new Date();
+      const [hours, minutes] = selectedTime.split(":").map(Number);
+      const selected = new Date(selectedDate + "T" + selectedTime + ":00");
 
+      if (selected - now < 60*60*1000) return false; // less than 1 hour
+      for (const appt of bookedAppointments) {
+        if (appt.date === selectedDate && appt.time === selectedTime) return false; // already booked
+      }
+      return true;
+    }
+
+    leadForm.addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(leadForm);
+      const params = new URLSearchParams(formData);
+
+      if (!isTimeValid(dateInput.value, timeInput.value)) {
+        statusEl.innerText = "⚠️ הזמן הזה אינו זמין, בחר שעה אחרת.";
+        statusEl.style.color = "red";
+        return;
+      }
+
+      try {
+        const response = await fetch(webAppURL, {
+          method: "POST",
+          body: params
+        });
+        const result = await response.text();
+
+        if (result.toLowerCase() === "success") {
+          statusEl.innerText = "✅ התור נקבע בהצלחה!";
+          statusEl.style.color = "green";
+          leadForm.reset();
+          fetchAppointments();
+        } else if (result.toLowerCase() === "unavailable") {
+          statusEl.innerText = "⚠️ השעה הזאת כבר תפוסה.";
+          statusEl.style.color = "red";
+        } else if (result.toLowerCase() === "too_soon") {
+          statusEl.innerText = "⚠️ השעה חייבת להיות לפחות שעה מהזמן הנוכחי.";
+          statusEl.style.color = "red";
+        } else {
+          statusEl.innerText = "❌ שגיאה: " + result;
+          statusEl.style.color = "red";
+        }
+      } catch(err) {
+        statusEl.innerText = "❌ בקשה נכשלה";
+        statusEl.style.color = "red";
+      }
+    });
+
+    // Initial fetch to get already booked times
+    fetchAppointments();
+  </script>
 </body>
 </html>
